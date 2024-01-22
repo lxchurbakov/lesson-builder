@@ -8,7 +8,7 @@ This is a vanilla monorepo. Just clone and do npm install in the root.
 
 ## Dev Run
 
-TBD
+To run the client side do `npm run dev -w services/client`. Parcel will build the app and run it.
 
 ## Production Build
 
