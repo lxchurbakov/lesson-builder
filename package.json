@@ -11,5 +11,8 @@
   "workspaces": [
     "services/client",
     "services/server"
-  ]
+  ],
+  "devDependencies": {
+    "process": "^0.11.10"
+  }
 }
