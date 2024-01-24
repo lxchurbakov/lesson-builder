@@ -32,15 +32,44 @@ const MODE_OPTIONS = [
     { value: 'answer', label: 'Answer', },
 ] as Option<Mode>[];
 
+const Task = ({ mode, question, onChangeQuestion, answer, onChangeAnswer, onSubmit }) => {
+    // const [question, setQuestion] = React.useState('');
+    // const [value, setValue] = React.useState('');
+
+    return (
+        <Card background="#f0f0f0" p="16px" radius="4px" w="100%">
+            {mode === 'edit' && (
+                <Base>
+                    <Text mb="8px" size="14px">Enter the question text:</Text>
+                    <TextInput placeholder="Question" background="#e5e5e5" size="16px" value={question} onChange={onChangeQuestion} />
+                </Base>
+            )}
+
+            {mode === 'answer' && (
+                <Base>
+                    <Text mb="8px" size="14px">The question:</Text>
+                    <Text mb="24px" size="16px" weight="400">{question || 'Empty question'}</Text>
+
+                    <Text mb="8px" size="14px">Your answer:</Text>
+                    <TextInput mb="24px" placeholder="Question" background="#e5e5e5" size="16px" value={answer} onChange={onChangeAnswer} />
+
+                    <Clickable onClick={onSubmit} mb="12px" background="#673ab7" p="8px 12px" radius="8px">
+                        <Text color={colors.white}>Answer</Text>
+                    </Clickable>
+                </Base>
+            )}
+        </Card>            
+    );
+};
+
 export default () => {
     const [mode, setMode] = React.useState('edit' as Mode);
-
     const [question, setQuestion] = React.useState('');
-    const [value, setValue] = React.useState('');
+    const [answer, setAnswer] = React.useState('');
 
-    const answer = React.useCallback(() => {
-        console.log('answer', question, value);
-    }, [question, value]);
+    const submit = React.useCallback(() => {
+        console.log('Submit', question, answer);
+    }, [question, answer]);
 
     return (
         <Container p="64px 0">
@@ -49,30 +78,9 @@ export default () => {
                 <Text size="18px" weight="400">Build your lesson, share, complete and review the results.</Text>
             </Base>
 
-            <Card background="#f0f0f0" p="16px" radius="4px" w="100%">
-                <Tabs<Mode> mb="24px" value={mode} onChange={setMode} options={MODE_OPTIONS} />
+            <Tabs<Mode> mb="24px" value={mode} onChange={setMode} options={MODE_OPTIONS} />
 
-                {mode === 'edit' && (
-                    <Base>
-                        <Text mb="8px" size="14px">Enter the question text:</Text>
-                        <TextInput placeholder="Question" background="#e5e5e5" size="16px" value={question} onChange={setQuestion} />
-                    </Base>
-                )}
-
-                {mode === 'answer' && (
-                    <Base>
-                        <Text mb="8px" size="14px">The question:</Text>
-                        <Text mb="24px" size="16px" weight="400">{question || 'Empty question'}</Text>
-
-                        <Text mb="8px" size="14px">Your answer:</Text>
-                        <TextInput mb="24px" placeholder="Question" background="#e5e5e5" size="16px" value={value} onChange={setValue} />
-
-                        <Clickable onClick={answer} mb="12px" background="#673ab7" p="8px 12px" radius="8px">
-                            <Text color={colors.white}>Answer</Text>
-                        </Clickable>
-                    </Base>
-                )}
-            </Card>            
+            <Task question={question} onChangeQuestion={setQuestion} answer={answer} onChangeAnswer={setAnswer} mode={mode} onSubmit={submit} />
         </Container>
     );
 };
